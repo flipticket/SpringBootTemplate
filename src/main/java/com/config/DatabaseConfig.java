@@ -5,17 +5,12 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableTransactionManagement
@@ -64,6 +59,7 @@ public class DatabaseConfig {
     hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
     hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
     hibernateProperties.put("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
+    hibernateProperties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
     sessionFactoryBean.setHibernateProperties(hibernateProperties);
     
     return sessionFactoryBean;
@@ -77,16 +73,7 @@ public class DatabaseConfig {
     return transactionManager;
   }
   
-  /*@Bean
-  public ServletRegistrationBean foo() {
-      DispatcherServlet dispatcherServlet = new DispatcherServlet();   
-      AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-      applicationContext.register(WebConfiguration.class);
-      dispatcherServlet.setApplicationContext(applicationContext);
-      ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/api/*");
-      servletRegistrationBean.setName("api");
-      return servletRegistrationBean;
-  }*/
+  
 
 
 } // class DatabaseConfig
